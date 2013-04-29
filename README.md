@@ -1,2 +1,1 @@
-learn-js
-========
+Изучаем JavaScript...
