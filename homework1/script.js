@@ -1,35 +1,31 @@
 /**
- * Функция multiplyArrays
- * - может принимать на вход произвольное количество массивов
- * - каждый из этих массивов может содержать произвольное количество чисел
- * - функция возвращает массив, количество элементов этого массива равно количеству переданных массивов
- * - каждый элемент возвращаемого массива - результат перемножения элементов соответствующего принятого массива
- *
- * @returns {Array}
+ * multiplyArrays() возвращает произведение чисел массива передаваемого в каждом аргументе
+ * @param {...Number[]} nums Массив чисел, для которых нужно найти произведение
+ * @returns {Number[]} Массив чисел, размер которого равен количеству переданных аргументов
  */
-function multiplyArrays() {
+function multiplyArrays(nums) {
     "use strict";
-    var resultArray = [],
+    var results = [],
         argumentsLength = arguments.length,
-        argumentArray,
-        argumentArrayLength,
+        numbers,
+        numbersLength,
         product,
         i,
         j;
 
     for (i = 0; i < argumentsLength; i++) {
-        argumentArray = arguments[i];
-        argumentArrayLength = argumentArray.length;
-        product = argumentArray[0];
+        numbers = arguments[i];
+        numbersLength = numbers.length;
+        product = numbers[0];
 
-        for (j = 1; j < argumentArrayLength; j++) {
-            product *= argumentArray[j];
+        for (j = 1; j < numbersLength; j++) {
+            product *= numbers[j];
         }
 
-        resultArray.push(product);
+        results.push(product);
     }
 
-    return resultArray;
+    return results;
 }
 
 // Проверка
