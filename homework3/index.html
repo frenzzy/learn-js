@@ -3,19 +3,36 @@
 <head>
     <meta charset=utf-8>
     <title>homework3</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Домашнее задание №3</h1>
-    <p>Эмулировать жизнь котят приговоренных к смерти.</p>
-    <ul>
-        <li>Должна быть функция createKitten, которая принимает 2 аргумента: имя котенка и его слова которые он говорит перед смертью</li>
-        <li>функция должна возвращать объект, у которого будет свойство name и метод die</li>
-        <li>во время выполнения метода die котенок должен говорить свои последние слова</li>
-        <li>Должен существовать объект bag</li>
-        <li>у него должен быть метод put который принимает котенка</li>
-        <li>метод getKitten который принимает имя котенка и возвращает котенка с этим именем</li>
-        <li>метод sink во время которого погибают все котята (у них вызывается метод die)</li>
-    </ul>
+    <div class="container">
+        <div class="page-header">
+            <h1>Домашнее задание №3</h1>
+        </div>
+        <p>Эмулировать жизнь котят приговоренных к смерти.</p>
+        <ul>
+            <li>Должна быть функция <code>createKitten</code>, которая принимает 2 аргумента: имя котенка и его слова которые он говорит перед смертью</li>
+            <li>функция должна возвращать объект, у которого будет свойство <code>name</code> и метод <code>die</code></li>
+            <li>во время выполнения метода <code>die</code> котенок должен говорить свои последние слова</li>
+            <li>Должен существовать объект <code>bag</code></li>
+            <li>у него должен быть метод <code>put</code> который принимает котенка</li>
+            <li>метод <code>getKitten</code> который принимает имя котенка и возвращает котенка с этим именем</li>
+            <li>метод <code>sink</code> во время которого погибают все котята (у них вызывается метод <code>die</code>)</li>
+        </ul>
+        <p>Пример:</p>
+        <pre>var kitten = createKitten('April', 'I wanna live');
+kitten.name; // 'April'
+kitten.die(); // logs 'I wanna live'
+
+var stupidKitten = createKitten('Nyasha', 'meow');
+
+bag.put(kitten);
+bag.put(stupidKitten);
+bag.getKitten('April') === kitten; // true
+bag.getKitten('notExistedKitten') === null; // true
+bag.sink(); // logs 'I wanna live' 'meow'</pre>
+    </div>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="tests.js"></script>
 </body>

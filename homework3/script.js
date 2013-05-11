@@ -1,8 +1,8 @@
 /**
  * createKitten() создает котенка
- * @param name Имя котенка
- * @param lastWord Последние слова котенка
- * @returns {Object}
+ * @param {String} name Имя котенка
+ * @param {String} lastWord Последние слова котенка
+ * @returns {{name: String, die: Function}}
  */
 function createKitten(name, lastWord) {
     "use strict";
@@ -22,7 +22,7 @@ var bag = {
     kittens: {},
     /**
      * put() добавляет котенка в мешок
-     * @param {Object} kitten
+     * @param {{name: String, die: Function}} kitten
      */
     put: function (kitten) {
         "use strict";
@@ -30,8 +30,8 @@ var bag = {
     },
     /**
      * getKitten() возвращает котенка по имени
-     * @param name
-     * @returns {Object|Null}
+     * @param {String} name
+     * @returns {{name: String, die: Function}|Null}
      */
     getKitten: function (name) {
         "use strict";

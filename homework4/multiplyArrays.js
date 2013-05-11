@@ -5,25 +5,16 @@
  */
 function multiplyArrays(nums) {
     "use strict";
-    var results = [],
-        argumentsLength = arguments.length,
-        numbers,
-        numbersLength,
-        product,
-        i,
-        j;
+    var result = [],
+        product;
 
-    for (i = 0; i < argumentsLength; i++) {
-        numbers = arguments[i];
-        numbersLength = numbers.length;
-        product = numbers[0];
+    Array.prototype.map.call(arguments, function (numbers) {
+        product = Array.prototype.reduce.call(numbers, function (previousValue, currentValue) {
+            return currentValue * previousValue;
+        });
 
-        for (j = 1; j < numbersLength; j++) {
-            product *= numbers[j];
-        }
+        result.push(product);
+    });
 
-        results.push(product);
-    }
-
-    return results;
+    return result;
 }
