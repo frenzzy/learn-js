@@ -22,5 +22,5 @@ function cascadeCall(fn) {
     "use strict";
     return Array.prototype.reduceRight.call(arguments, function (prev, curr) {
         return curr(prev);
-    }, arguments.length - 1);
+    }, null);
 }
