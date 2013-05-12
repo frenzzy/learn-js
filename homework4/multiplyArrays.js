@@ -5,16 +5,9 @@
  */
 function multiplyArrays(nums) {
     "use strict";
-    var result = [],
-        product;
-
-    Array.prototype.map.call(arguments, function (numbers) {
-        product = Array.prototype.reduce.call(numbers, function (previousValue, currentValue) {
-            return currentValue * previousValue;
+    return Array.prototype.map.call(arguments, function (numbers) {
+        return numbers.reduce(function (prev, curr) {
+            return prev * curr;
         });
-
-        result.push(product);
     });
-
-    return result;
 }

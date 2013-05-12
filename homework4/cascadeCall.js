@@ -6,7 +6,7 @@
  */
 function cascadeCall(fn) {
     "use strict";
-    return Array.prototype.reduceRight.call(arguments, function (previousValue, currentValue) {
-        return currentValue(previousValue);
+    return Array.prototype.reduceRight.call(arguments, function (prev, curr) {
+        return curr(prev);
     }, arguments.length - 1);
 }
