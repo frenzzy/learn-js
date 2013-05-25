@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>homework5</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Домашнее задание №5</h1>
+        </div>
+        <p>Переписать домашнее задание №3 с использованием конструкторов.</p>
+        <blockquote>
+            <div>Эмулировать жизнь котят приговоренных к смерти.</div>
+            <ul>
+                <li>Должна быть функция <code>createKitten</code>, которая принимает 2 аргумента: имя котенка и его слова которые он говорит перед смертью</li>
+                <li>функция должна возвращать объект, у которого будет свойство <code>name</code> и метод <code>die</code></li>
+                <li>во время выполнения метода <code>die</code> котенок должен говорить свои последние слова</li>
+                <li>Должен существовать объект <code>bag</code></li>
+                <li>у него должен быть метод <code>put</code> который принимает котенка</li>
+                <li>метод <code>getKitten</code> который принимает имя котенка и возвращает котенка с этим именем</li>
+                <li>метод <code>sink</code> во время которого погибают все котята (у них вызывается метод <code>die</code>)</li>
+            </ul>
+            <small>Текст из <cite title="homework3">домашнего задания №3</cite></small>
+        </blockquote>
+        <p>Пример:</p>
+        <pre>var kitten = new Kitten('April', 'I wanna live');
+kitten.name; // 'April'
+kitten.die(); // logs 'I wanna live'
+
+var stupidKitten = new Kitten('Nyasha', 'meow');
+
+var bag = new Bag;
+bag.put(kitten);
+bag.put(stupidKitten);
+bag.getKitten('April') === kitten; // true
+bag.getKitten('notExistedKitten') === null; // true
+bag.sink(); // logs 'I wanna live' 'meow'</pre>
+    </div>
+    <script type="text/javascript" src="Kitten.js"></script>
+    <script type="text/javascript" src="Bag.js"></script>
+    <script type="text/javascript" src="tests.js"></script>
+</body>
+</html>
