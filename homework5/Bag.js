@@ -4,12 +4,14 @@
  */
 var Bag = function () {
     "use strict";
+
+    /** @type {Object} */
     this.kittens = {};
 };
 
 /**
  * Добавляет котенка в мешок
- * @param {Object} kitten
+ * @param {{name: String, lastWord: String, die: Function}} kitten
  */
 Bag.prototype.put = function (kitten) {
     "use strict";
@@ -18,8 +20,8 @@ Bag.prototype.put = function (kitten) {
 
 /**
  * Возвращает котенка по имени
- * @param name
- * @returns {Object|null}
+ * @param {String} name
+ * @returns {{name: String, lastWord: String, die: Function}|null}
  */
 Bag.prototype.getKitten = function (name) {
     "use strict";
@@ -31,11 +33,10 @@ Bag.prototype.getKitten = function (name) {
  */
 Bag.prototype.sink = function () {
     "use strict";
-    var object = this.kittens,
-        prop;
-    for (prop in object) {
-        if (object.hasOwnProperty(prop)) {
-            object[prop].die();
+    var kittens = this.kittens;
+    for (var prop in kittens) {
+        if (kittens.hasOwnProperty(prop)) {
+            kittens[prop].die();
         }
     }
 };
