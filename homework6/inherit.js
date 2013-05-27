@@ -1,11 +1,11 @@
 /**
  * Организует Object.create для функций конструкторов
- * @param {Function} parent
- * @param {Function} child
+ * @param {Function} Parent
+ * @param {Function} Child
  */
-function inherit(parent, child) {
+function inherit(Parent, Child) {
     "use strict";
     function F() {}
-    F.prototype = parent.prototype;
-    child.prototype = new F();
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
 }
