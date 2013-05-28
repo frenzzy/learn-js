@@ -1,7 +1,7 @@
 /**
- * Организует Object.create для функций конструкторов
- * @param {Function} Parent
- * @param {Function} Child
+ * Организует наследование для функций-конструкторов
+ * @param {Function} Parent Родительский конструктор
+ * @param {Function} Child Дочерний конструктор
  */
 function inherit(Parent, Child) {
     "use strict";
