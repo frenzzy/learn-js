@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>homework8</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Домашнее задание №8</h1>
+        </div>
+        <p>Написать класс <code>View</code>. Все наследуемые от него классы должны иметь возможность легко развешивать события на свои дочерние элементы и на себя.</p>
+        <p>Пример:</p>
+        <pre>function MyView () {
+  // ...
+}
+
+inherits(View, MyView);
+
+MyView.prototype.events = {
+  “click”: “doSmth”,
+  “click .a”: “doA”,
+  “click .b”: “doB”
+};
+
+MyView.prototype.doSmth = function(){
+  console.log(“doSmth”);
+};
+
+MyView.prototype.doA = function(){
+  console.log(“doA”);
+};
+
+MyView.prototype.doB = function(){
+  console.log(“doB”);
+};</pre>
+        <p>Элементы:</p>
+        <p>
+            <span class="el btn btn-large btn-warning">
+                el &nbsp;
+                <span class="a btn btn-danger">&nbsp; a &nbsp;</span>
+                <span class="b btn btn-danger">&nbsp; b &nbsp;</span>
+            </span>
+        </p>
+        <p>Инициализация:</p>
+        <pre>var view = new MyView({
+  el: document.boby.getElementsByClassName(‘el’)[0]
+});</pre>
+    </div>
+    <script type="text/javascript" src="View.js"></script>
+    <script type="text/javascript" src="inherit.js"></script>
+    <script type="text/javascript" src="MyView.js"></script>
+    <script type="text/javascript" src="tests.js"></script>
+</body>
+</html>

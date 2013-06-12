@@ -6,3 +6,5 @@
 4.  Методы массивов (reduce, reduceRight)
 5.  Конструкторы: Kitten и Bag
 6.  Пишем Object.create
+7.  Метод bind
+8.  addEventListener
