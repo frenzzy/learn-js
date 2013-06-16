@@ -8,4 +8,5 @@ var o = {prop: 7};
 
 var bindedF = f.bind(o, 2);
 var result = bindedF(5);
-console.assert(result === 14);
+console.assert(result === undefined);
+console.assert(a === 14);
