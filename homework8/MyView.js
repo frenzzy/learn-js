@@ -1,8 +1,8 @@
 /*global View, inherit*/
 
-function MyView() {
+function MyView(params) {
     "use strict";
-    // ...
+    this.bindEvents(params.el);
 }
 
 inherit(View, MyView);
