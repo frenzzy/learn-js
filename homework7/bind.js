@@ -6,4 +6,4 @@ Function.prototype.bind = function (context, arg1) {
     return function (arg2) {
         return that.apply(context, args.concat(Array.prototype.slice.call(arguments)));
     };
-}
+};
