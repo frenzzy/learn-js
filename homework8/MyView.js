@@ -1,8 +1,9 @@
+/*jslint devel: true*/
 /*global View, inherit*/
 
-function MyView(params) {
+function MyView(element) {
     "use strict";
-    this.bindEvents(params.el);
+    View.call(this, element);
 }
 
 inherit(View, MyView);
