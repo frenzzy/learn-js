@@ -74,6 +74,10 @@ View.prototype._handleEvent = function (event) {
         this._events.own[event.type].call(this);
     }
 
+    if (selectors === undefined) {
+        return;
+    }
+
     for (selector in selectors) {
         if (selectors.hasOwnProperty(selector)) {
             if (!event.target.matchesSelector(selector)) {
