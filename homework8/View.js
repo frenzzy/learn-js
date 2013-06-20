@@ -30,12 +30,13 @@ View.prototype._initEvents = function () {
     for (eventDescription in eventList) {
         if (eventList.hasOwnProperty(eventDescription)) {
             expression = /(\w+)\s?([\s\S]+)?/.exec(eventDescription);
-            eventName = expression[1];
-            selector = expression[2];
 
-            if (!eventName) {
+            if (!expression) {
                 continue;
             }
+
+            eventName = expression[1];
+            selector = expression[2];
 
             if (selector) {
                 if (this._events.own[eventName] === undefined) {
