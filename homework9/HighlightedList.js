@@ -1,5 +1,5 @@
 /*jslint todo: true, nomen: true*/
-/*global inherit, List*/
+/*global inherit, List, setTimeout*/
 
 /**
  * Список который умеет подсвечивать сам себя
@@ -24,10 +24,10 @@ HighlightedList.prototype._highlightSelf = function () {
     var className = this._element.className,
         expression = /\s?highlight/;
 
-    if (expression) {
-        this._element.className = className.replace(expression, '');
-    } else {
+    if (className.indexOf('highlight') === -1) {
         this._element.className = className + ' highlight';
+    } else {
+        this._element.className = className.replace(expression, '');
     }
 };
 
@@ -39,5 +39,8 @@ HighlightedList.prototype.addItem = function (item) {
     "use strict";
 
     this._highlightSelf();
+    setTimeout(this._highlightSelf.bind(this), 100);
+    setTimeout(this._highlightSelf.bind(this), 200);
+    setTimeout(this._highlightSelf.bind(this), 300);
     return this.constructor.addItem(item); // TODO: проверить правильность записи
 };

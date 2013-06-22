@@ -4,13 +4,47 @@
     <meta charset=utf-8>
     <title>homework9</title>
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <div class="page-header">
             <h1>Домашнее задание №9</h1>
         </div>
-        <p>Организовать drag and drop</p>
+        <p>Необходимо создать три списка и организовать перетаскивание элементов между ними (drag and drop). Второй список должен подсвечиваться когда в него добавляется элемент. А при добавлении элемента в третий список, этот же элемент должен добавляться и в первый список.</p>
+        <div class="row">
+            <div class="span4">
+                <ul class="list-one well nav nav-drag">
+                    <li><i class="icon-step-backward"></i> icon-step-backward</li>
+                    <li><i class="icon-fast-backward"></i> icon-fast-backward</li>
+                    <li><i class="icon-backward"></i> icon-backward</li>
+                    <li><i class="icon-play"></i> icon-play</li>
+                    <li><i class="icon-pause"></i> icon-pause</li>
+                    <li><i class="icon-stop"></i> icon-stop</li>
+                    <li><i class="icon-forward"></i> icon-forward</li>
+                    <li><i class="icon-fast-forward"></i> icon-fast-forward</li>
+                    <li><i class="icon-step-forward"></i> icon-step-forward</li>
+                </ul>
+            </div>
+            <div class="span4">
+                <ul class="list-two well nav nav-drag">
+                    <li><i class="icon-thumbs-up"></i> icon-thumbs-up</li>
+                    <li><i class="icon-thumbs-down"></i> icon-thumbs-down</li>
+                    <li><i class="icon-hand-right"></i> icon-hand-right</li>
+                    <li><i class="icon-hand-left"></i> icon-hand-left</li>
+                    <li><i class="icon-hand-up"></i> icon-hand-up</li>
+                    <li><i class="icon-hand-down"></i> icon-hand-down</li>
+                </ul>
+            </div>
+            <div class="span4">
+                <ul class="list-three well nav nav-drag">
+                    <li><i class="icon-circle-arrow-right"></i> icon-circle-arrow-right</li>
+                    <li><i class="icon-circle-arrow-left"></i> icon-circle-arrow-left</li>
+                    <li><i class="icon-circle-arrow-up"></i> icon-circle-arrow-up</li>
+                    <li><i class="icon-circle-arrow-down"></i> icon-circle-arrow-down</li>
+                </ul>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="inherit.js"></script>
     <script type="text/javascript" src="View.js"></script>

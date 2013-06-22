@@ -1,0 +1,33 @@
+.nav-drag {
+    padding: 16px;
+}
+.nav-drag li {
+    margin-top: 4px;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+    width: 250px;
+}
+.nav-drag li:first-child {
+    margin-top: 0;
+}
+.nav-drag li:active {
+    background-color: #0088cc;
+    color: #fff;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+.highlight {
+    border-color: #0088cc;
+    background-color: #0088cc;
+    color: #fff;
+}
+.highlight [class^="icon-"],
+.highlight [class*=" icon-"],
+.nav-drag li:active [class^="icon-"],
+.nav-drag li:active [class*=" icon-"] {
+    background-image: url("../bootstrap/img/glyphicons-halflings-white.png");
+}
