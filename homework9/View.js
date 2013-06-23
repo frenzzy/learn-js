@@ -1,4 +1,4 @@
-/*jslint todo: true, nomen: true, devel: true*/
+/*jslint nomen: true, devel: true, browser: true*/
 
 /**
  * Управляет DOM элементами
@@ -15,8 +15,40 @@ function View(element) {
      */
     this._element = element;
 
-    // TODO: добавить drag and drop
+    if (!View._initialized) {
+        View._initialized = true;
+        this._initEvents();
+    }
 }
+
+/**
+ * Подключает обработчики событий
+ * @private
+ */
+View.prototype._initEvents = function () {
+    "use strict";
+
+    document.body.addEventListener('click', this._handleEvent.bind(this));
+};
+
+/**
+ * Обрабатывает события
+ * @param {Event} event
+ * @private
+ */
+View.prototype._handleEvent = function (event) {
+    "use strict";
+
+    if (event.target.tagName.toLowerCase() === 'li') {
+        if (event.target.className.indexOf('active') === -1) {
+            event.target.className += (event.target.className ? ' ' : '') + 'active';
+        }
+
+        setTimeout(function () {
+            this.className = this.className.replace(/(?:^|\\s)active(?!\\S)/, '');
+        }.bind(event.target), 500);
+    }
+};
 
 /**
  * Добавляет DOM элемент

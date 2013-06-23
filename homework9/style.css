@@ -15,7 +15,7 @@
 .nav-drag > li:hover {
     background-color: #fff;
 }
-.nav-drag > li:active {
+.nav-drag > li.active {
     background-color: #0088cc;
     color: #fff;
     cursor: -webkit-grabbing;
@@ -29,7 +29,7 @@ ul.highlight {
 }
 ul.highlight [class^="icon-"],
 ul.highlight [class*=" icon-"],
-.nav-drag li:active [class^="icon-"],
-.nav-drag li:active [class*=" icon-"] {
+.nav-drag > li.active [class^="icon-"],
+.nav-drag > li.active [class*=" icon-"] {
     background-image: url("../bootstrap/img/glyphicons-halflings-white.png");
 }
