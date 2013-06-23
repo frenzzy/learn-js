@@ -1,4 +1,5 @@
-/*global Kitten,Bag,assert*/
+/*jslint devel: true*/
+/*global Kitten, Bag, assert*/
 
 // Kitten tests
 var kitten = new Kitten('April', 'I wanna live');

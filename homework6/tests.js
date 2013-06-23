@@ -1,3 +1,4 @@
+/*jslint devel: true*/
 /*global inherit*/
 
 var Animal = function (params) {

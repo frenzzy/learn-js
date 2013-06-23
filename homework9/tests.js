@@ -1,7 +1,7 @@
 /*jslint browser: true*/
-/*global List, HighlightedList, EventList, Manager*/
+/*global View, List, HighlightedList, EventList, ListManager*/
 
-var listManager = new Manager();
+var listManager = new ListManager();
 
 var listOne = new List(document.getElementsByClassName("list-one")[0]);
 var listTwo = new HighlightedList(document.getElementsByClassName("list-two")[0]);

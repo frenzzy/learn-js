@@ -1,3 +1,6 @@
+/*jslint devel: true*/
+/*global createKitten, bag*/
+
 var kitten = createKitten('April', 'I wanna live');
 
 console.assert(typeof kitten === 'object', 'createKitten() should return an object');

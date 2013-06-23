@@ -1,7 +1,7 @@
 /**
  * Организует наследование для функций-конструкторов
- * @param {Function} Parent Родительский конструктор
- * @param {Function} Child Дочерний конструктор
+ * @param {Function} Parent
+ * @param {Function} Child
  */
 function inherit(Parent, Child) {
     "use strict";

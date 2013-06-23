@@ -1,3 +1,5 @@
+/*jslint devel: true*/
+
 /**
  * createKitten() создает котенка
  * @param {String} name Имя котенка

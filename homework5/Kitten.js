@@ -1,3 +1,5 @@
+/*jslint devel: true*/
+
 /**
  * Создает котенка
  * @class Kitten

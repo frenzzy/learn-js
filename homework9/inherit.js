@@ -1,5 +1,3 @@
-/*jslint todo: true*/
-
 /**
  * Организует наследование для функций-конструкторов
  * @param {Function} Parent
@@ -10,6 +8,5 @@ function inherit(Parent, Child) {
 
     Child.prototype = Object.create(Parent.prototype);
     Child.prototype.constructor = Child;
-
-    // TODO: Добавить информацию о родительском конструкторе
+    Child.prototype.parentPrototype = Parent.prototype;
 }

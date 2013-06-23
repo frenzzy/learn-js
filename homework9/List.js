@@ -4,30 +4,26 @@
 /**
  * Содержит информацию о списке
  * @param {Element} element
- * @class Список
  * @constructor
  */
 function List(element) {
     "use strict";
 
-    /**
-     * Хранит элемент списка
-     * @type {Element}
-     * @private
-     */
-    this._element = element;
-
-    // TODO: Продумать свойства списка
+    View.call(this, element);
 }
 
-inherit(List, View);
+inherit(View, List);
 
 /**
  * Добавляет элемент в список
  * @param {Element} item
+ * @returns {Object}
  */
 List.prototype.addItem = function (item) {
     "use strict";
 
+    // TODO: переписать без использования _element
     this._element.appendChild(item);
+
+    return this;
 };

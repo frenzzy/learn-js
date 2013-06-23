@@ -1,3 +1,5 @@
+/*jslint devel: true*/
+
 var a;
 var f = function (p1, p2) {
     "use strict";

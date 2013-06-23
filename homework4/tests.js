@@ -1,3 +1,6 @@
+/*jslint devel: true*/
+/*global multiplyArrays, cascadeCall*/
+
 // multiplyArrays tests
 var result = multiplyArrays([1, 2], [12, 5, 7], [1]);
 

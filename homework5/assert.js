@@ -1,3 +1,5 @@
+/*jslint devel: true*/
+
 /**
  * Расширят console.asset для работы с console.log
  * @type {Object}

@@ -2,11 +2,10 @@
 /*global Element */
 
 if (!Element.prototype.matchesSelector) {
-    Element.prototype.matchesSelector = Element.prototype.webkitMatchesSelector
-        || Element.prototype.mozMatchesSelector
-        || Element.prototype.msMatchesSelector
-        || Element.prototype.oMatchesSelector
-        || // Что-то querySelectorAll ничего не находит, хм..
+    Element.prototype.matchesSelector = Element.prototype.webkitMatchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
         function (selector) {
             "use strict";
             var matches = this.querySelectorAll(selector),

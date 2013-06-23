@@ -1,11 +1,10 @@
-/*jslint todo: true, nomen: true, devel: true*/
+/*jslint nomen: true*/
 
 /**
  * Хранит информацию обо всех списках и позволяет управлять ими
- * @class Менеджер списков
  * @constructor
  */
-function Manager() {
+function ListManager() {
     "use strict";
 
     /**
@@ -19,19 +18,20 @@ function Manager() {
 /**
  * Сохраняет экземпляр класса List для дальнейшего использования
  * @param {List} list
+ * @returns {Number}
  */
-Manager.prototype.addList = function (list) {
+ListManager.prototype.addList = function (list) {
     "use strict";
 
-    this._lists.push(list);
+    return this._lists.push(list);
 };
 
 /**
  * Добавляет элемент в первый список
  * @param {Element} item
- * @returns {Boolean}
+ * @returns {Object}
  */
-Manager.prototype.addItemToFirstList = function (item) {
+ListManager.prototype.addItemToFirstList = function (item) {
     "use strict";
 
     return this._lists[0].addItem(item);

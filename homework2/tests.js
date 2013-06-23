@@ -1,3 +1,6 @@
+/*jslint devel: true*/
+/*global cascadeCall*/
+
 function a(n) {
     "use strict";
     return n * 2;

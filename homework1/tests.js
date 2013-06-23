@@ -1,3 +1,6 @@
+/*jslint devel: true*/
+/*global multiplyArrays*/
+
 var result = multiplyArrays([1, 2], [12, 5, 7], [1]);
 
 console.assert(typeof result === 'object', 'multiplyArrays() should return an array');
