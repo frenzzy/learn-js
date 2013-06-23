@@ -42,5 +42,5 @@ HighlightedList.prototype.addItem = function (item) {
     setTimeout(this._highlightSelfToggle.bind(this), 200);
     setTimeout(this._highlightSelfToggle.bind(this), 300);
 
-    return this.parentPrototype.addItem(item);
+    return this.parentPrototype.addItem.call(this, item);
 };

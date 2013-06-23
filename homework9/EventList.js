@@ -31,5 +31,5 @@ EventList.prototype.addItem = function (item) {
 
     this._manager.addItemToFirstList(item.cloneNode(true));
 
-    return this.parentPrototype.addItem(item);
+    return this.parentPrototype.addItem.call(this, item);
 };

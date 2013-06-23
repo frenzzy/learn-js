@@ -1,4 +1,4 @@
-/*jslint todo: true, nomen: true*/
+/*jslint nomen: true*/
 /*global inherit, View*/
 
 /**
@@ -22,8 +22,5 @@ inherit(View, List);
 List.prototype.addItem = function (item) {
     "use strict";
 
-    // TODO: переписать без использования _element
-    this._element.appendChild(item);
-
-    return this;
+    return this.addElement(item);
 };

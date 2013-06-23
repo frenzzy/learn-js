@@ -19,6 +19,19 @@ function View(element) {
 }
 
 /**
+ * Добавляет DOM элемент
+ * @param {Element} element
+ * @returns {Object}
+ */
+View.prototype.addElement = function (element) {
+    "use strict";
+
+    this._element.appendChild(element);
+
+    return this;
+};
+
+/**
  * Проверяет элемент на наличие css класса
  * @param {String} className
  * @returns {Boolean}
@@ -37,7 +50,7 @@ View.prototype.hasClass = function (className) {
 View.prototype.addClass = function (className) {
     "use strict";
 
-    this._element.className = this._element.className + ' ' + className;
+    this._element.className += (this._element.className ? ' ' : '') + className;
 
     return this;
 };
