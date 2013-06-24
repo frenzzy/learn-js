@@ -1,6 +1,9 @@
 .nav-drag {
     padding: 16px;
 }
+.nav-drag.over {
+    border-color: #0088cc;
+}
 .nav-drag > li {
     margin-top: 2px;
     border-radius: 5px;

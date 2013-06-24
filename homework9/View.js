@@ -15,11 +15,37 @@ function View(element) {
      */
     this._element = element;
 
+    this._initDraggable();
+
     if (!View._initialized) {
         View._initialized = true;
         this._initEvents();
     }
+
+    element.addEventListener('dragenter', this._onDragEnter.bind(this));
+    element.addEventListener('dragover', this._onDragOver.bind(this));
+    element.addEventListener('dragleave', this._onDragLeave.bind(this));
+    element.addEventListener('drop', this._onDrop.bind(this));
 }
+
+View.dragItem = null;
+
+/**
+ * Включает нативное перетаскивание элементов
+ * @private
+ */
+View.prototype._initDraggable = function () {
+    "use strict";
+
+    var element = this._element.childNodes[0];
+
+    while (element) {
+        if (element.nodeType === 1) {
+            element.setAttribute('draggable', 'true');
+        }
+        element = element.nextSibling;
+    }
+};
 
 /**
  * Подключает обработчики событий
@@ -28,13 +54,63 @@ function View(element) {
 View.prototype._initEvents = function () {
     "use strict";
 
-    document.body.addEventListener('click', this._handleEvent.bind(this));
+    document.addEventListener('dragstart', this._onDragStart.bind(this));
+};
+
+View.prototype._onDragStart = function (event) {
+    "use strict";
+
+    View.dragItem = event.target;
+};
+
+View.prototype._onDragEnter = function (event) {
+    "use strict";
+
+    this.addClass('over');
+
+    return false;
+};
+
+View.prototype._onDragOver = function (event) {
+    "use strict";
+
+    if (event.preventDefault) {
+        event.preventDefault();
+    }
+
+    this.addClass('over');
+
+    event.dataTransfer.dropEffect = 'move';
+
+    return false;
+};
+
+View.prototype._onDragLeave = function (event) {
+    "use strict";
+
+    this.removeClass('over');
+};
+
+View.prototype._onDrop = function (event) {
+    "use strict";
+
+    if (event.stopPropagation) {
+        event.stopPropagation();
+    }
+
+    if (View.dragItem) {
+        this._addItem(View.dragItem);
+        View.dragItem = null;
+    }
+
+    return false;
 };
 
 /**
  * Обрабатывает события
  * @param {Event} event
  * @private
+ * @deprecated
  */
 View.prototype._handleEvent = function (event) {
     "use strict";
@@ -52,13 +128,14 @@ View.prototype._handleEvent = function (event) {
 
 /**
  * Добавляет DOM элемент
- * @param {Element} element
+ * @param {Element} item
  * @returns {Object}
+ * @protected
  */
-View.prototype.addElement = function (element) {
+View.prototype._addItem = function (item) {
     "use strict";
 
-    this._element.appendChild(element);
+    this._element.appendChild(item);
 
     return this;
 };
@@ -82,7 +159,9 @@ View.prototype.hasClass = function (className) {
 View.prototype.addClass = function (className) {
     "use strict";
 
-    this._element.className += (this._element.className ? ' ' : '') + className;
+    if (!this.hasClass(className)) {
+        this._element.className += (this._element.className ? ' ' : '') + className;
+    }
 
     return this;
 };

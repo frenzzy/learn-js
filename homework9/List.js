@@ -18,9 +18,10 @@ inherit(View, List);
  * Добавляет элемент в список
  * @param {Element} item
  * @returns {Object}
+ * @protected
  */
-List.prototype.addItem = function (item) {
+List.prototype._addItem = function (item) {
     "use strict";
 
-    return this.addElement(item);
+    return View.prototype._addItem(item);
 };

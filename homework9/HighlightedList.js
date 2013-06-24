@@ -33,8 +33,9 @@ HighlightedList.prototype._highlightSelfToggle = function () {
  * Добавляет элемент в список
  * @param {Element} item
  * @returns {Object}
+ * @private
  */
-HighlightedList.prototype.addItem = function (item) {
+HighlightedList.prototype._addItem = function (item) {
     "use strict";
 
     this._highlightSelfToggle();
@@ -42,5 +43,5 @@ HighlightedList.prototype.addItem = function (item) {
     setTimeout(this._highlightSelfToggle.bind(this), 200);
     setTimeout(this._highlightSelfToggle.bind(this), 300);
 
-    return this.parentPrototype.addItem.call(this, item);
+    return List.prototype._addItem.call(this, item);
 };

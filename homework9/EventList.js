@@ -25,11 +25,12 @@ inherit(List, EventList);
 /**
  * Добавляет элемент в список
  * @param {Element} item
+ * @private
  */
-EventList.prototype.addItem = function (item) {
+EventList.prototype._addItem = function (item) {
     "use strict";
 
     this._manager.addItemToFirstList(item.cloneNode(true));
 
-    return this.parentPrototype.addItem.call(this, item);
+    return List.prototype._addItem.call(this, item);
 };
