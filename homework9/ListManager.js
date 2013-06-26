@@ -34,5 +34,5 @@ ListManager.prototype.addList = function (list) {
 ListManager.prototype.addItemToFirstList = function (item) {
     "use strict";
 
-    return this._lists[0].addItem(item);
+    return this._lists[0]._addItem(item);
 };

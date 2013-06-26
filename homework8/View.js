@@ -68,14 +68,14 @@ View.prototype._initEvents = function () {
  */
 View.prototype._handleEvent = function (event) {
     "use strict";
+    if (this._element === event.target && this._events.own[event.type]) {
+        this._events.own[event.type].call(this, event);
+    }
+
     var selectors = this._events.child[event.type],
         selector;
 
-    if (this._element === event.target && this._events.own[event.type]) {
-        this._events.own[event.type].call(this);
-    }
-
-    if (selectors === undefined) {
+    if (!selectors) {
         return;
     }
 
@@ -85,7 +85,7 @@ View.prototype._handleEvent = function (event) {
                 continue;
             }
 
-            this._events.child[event.type][selector].call(this);
+            this._events.child[event.type][selector].call(this, event);
         }
     }
 };

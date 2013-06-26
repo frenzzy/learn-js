@@ -1,4 +1,4 @@
-/*jslint nomen: true, devel: true, browser: true*/
+/*jslint nomen: true, devel: true, browser: true, continue: true*/
 
 /**
  * Управляет DOM элементами
@@ -11,133 +11,101 @@ function View(element) {
     /**
      * Хранит DOM элемент
      * @type {Element}
-     * @private
+     * @protected
      */
     this._element = element;
 
-    this._initDraggable();
+    /**
+     * Хранит события в милом формате
+     * @type {Object}
+     * @private
+     */
+    this._events = {
+        own: {},
+        child: {}
+    };
 
-    if (!View._initialized) {
-        View._initialized = true;
-        this._initEvents();
-    }
-
-    element.addEventListener('dragenter', this._onDragEnter.bind(this));
-    element.addEventListener('dragover', this._onDragOver.bind(this));
-    element.addEventListener('dragleave', this._onDragLeave.bind(this));
-    element.addEventListener('drop', this._onDrop.bind(this));
+    this._initEvents();
 }
 
-View.dragItem = null;
 
 /**
- * Включает нативное перетаскивание элементов
- * @private
+ * @type {Object}
  */
-View.prototype._initDraggable = function () {
-    "use strict";
-
-    var element = this._element.childNodes[0];
-
-    while (element) {
-        if (element.nodeType === 1) {
-            element.setAttribute('draggable', 'true');
-        }
-        element = element.nextSibling;
-    }
-};
+View.prototype.events = {};
 
 /**
- * Подключает обработчики событий
  * @private
  */
 View.prototype._initEvents = function () {
     "use strict";
+    var eventList = this.events,
+        eventDescription,
+        expression,
+        eventName,
+        selector;
 
-    document.addEventListener('dragstart', this._onDragStart.bind(this));
-};
+    for (eventDescription in eventList) {
+        if (eventList.hasOwnProperty(eventDescription)) {
+            expression = /(\w+)\s?([\s\S]+)?/.exec(eventDescription);
 
-View.prototype._onDragStart = function (event) {
-    "use strict";
+            if (!expression) {
+                continue;
+            }
 
-    View.dragItem = event.target;
-};
+            eventName = expression[1];
+            selector = expression[2];
 
-View.prototype._onDragEnter = function (event) {
-    "use strict";
+            if (selector) {
+                if (this._events.own[eventName] === undefined) {
+                    this._events.own[eventName] = null;
+                }
 
-    this.addClass('over');
+                if (this._events.child[eventName] === undefined) {
+                    this._events.child[eventName] = {};
+                }
 
-    return false;
-};
-
-View.prototype._onDragOver = function (event) {
-    "use strict";
-
-    if (event.preventDefault) {
-        event.preventDefault();
+                this._events.child[eventName][selector] = this[eventList[eventDescription]];
+            } else {
+                this._events.own[eventName] = this[eventList[eventDescription]];
+            }
+        }
     }
 
-    this.addClass('over');
+    eventList = this._events.own;
 
-    event.dataTransfer.dropEffect = 'move';
-
-    return false;
-};
-
-View.prototype._onDragLeave = function (event) {
-    "use strict";
-
-    this.removeClass('over');
-};
-
-View.prototype._onDrop = function (event) {
-    "use strict";
-
-    if (event.stopPropagation) {
-        event.stopPropagation();
+    for (eventName in eventList) {
+        if (eventList.hasOwnProperty(eventName)) {
+            this._element.addEventListener(eventName, this._handleEvent.bind(this));
+        }
     }
-
-    if (View.dragItem) {
-        this._addItem(View.dragItem);
-        View.dragItem = null;
-    }
-
-    return false;
 };
 
 /**
- * Обрабатывает события
- * @param {Event} event
  * @private
- * @deprecated
  */
 View.prototype._handleEvent = function (event) {
     "use strict";
-
-    if (event.target.tagName.toLowerCase() === 'li') {
-        if (event.target.className.indexOf('active') === -1) {
-            event.target.className += (event.target.className ? ' ' : '') + 'active';
-        }
-
-        setTimeout(function () {
-            this.className = this.className.replace(/(?:^|\\s)active(?!\\S)/, '');
-        }.bind(event.target), 500);
+    if (this._element === event.target && this._events.own[event.type]) {
+        this._events.own[event.type].call(this, event);
     }
-};
 
-/**
- * Добавляет DOM элемент
- * @param {Element} item
- * @returns {Object}
- * @protected
- */
-View.prototype._addItem = function (item) {
-    "use strict";
+    var selectors = this._events.child[event.type],
+        selector;
 
-    this._element.appendChild(item);
+    if (!selectors) {
+        return;
+    }
 
-    return this;
+    for (selector in selectors) {
+        if (selectors.hasOwnProperty(selector)) {
+            if (!event.target.matchesSelector(selector)) {
+                continue;
+            }
+
+            this._events.child[event.type][selector].call(this, event);
+        }
+    }
 };
 
 /**
