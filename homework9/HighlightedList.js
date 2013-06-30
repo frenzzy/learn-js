@@ -12,7 +12,7 @@ function HighlightedList(element) {
     List.call(this, element);
 }
 
-inherit(List, HighlightedList);
+inherit(HighlightedList, List);
 
 /**
  * Добавляет класс .highlight для списка

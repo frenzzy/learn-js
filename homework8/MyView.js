@@ -6,7 +6,7 @@ function MyView(params) {
     View.call(this, params.el);
 }
 
-inherit(View, MyView);
+inherit(MyView, View);
 
 MyView.prototype.events = {
     "click": "doSmth",

@@ -20,7 +20,7 @@ function EventList(element, manager) {
     this._manager = manager;
 }
 
-inherit(List, EventList);
+inherit(EventList, List);
 
 /**
  * Добавляет элемент в список

@@ -14,11 +14,13 @@ function List(element) {
     this._initDraggable();
 }
 
-inherit(View, List);
+inherit(List, View);
 
 List.prototype.events = {
     "dragstart li": "_onDragStart",
+    "dragover *": "_onDragOver",
     "dragover": "_onDragOver",
+    "drop *": "_onDrop",
     "drop": "_onDrop"
 };
 
