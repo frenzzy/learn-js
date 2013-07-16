@@ -9,3 +9,4 @@
 7. Метод bind
 8. addEventListener
 9. Drag and drop
+10. Extend Class
