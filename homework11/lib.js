@@ -4,6 +4,11 @@
 (function () {
     "use strict";
 
+    /**
+     * @param {String} selector
+     * @constructor
+     * @class Lib
+     */
     var Lib = function (selector) {
         // TODO
     };
