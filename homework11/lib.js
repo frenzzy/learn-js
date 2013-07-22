@@ -5,7 +5,7 @@
     "use strict";
 
     /**
-     * @param {String} selector
+     * @param {String|HTMLElement} selector
      * @constructor
      * @class Lib
      */
