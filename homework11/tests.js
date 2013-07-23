@@ -105,10 +105,10 @@ console.assert($el.css('padding') === '10px');
 // attr
 
 $el.attr({title: 'test', align: 'right'});
-console.assert(el.attributes.title === 'test');
-console.assert(el.attributes.align === 'right');
+console.assert(el.getAttribute('title') === 'test');
+console.assert(el.getAttribute('align') === 'right');
 
-$el.css('title', 'temp');
-console.assert(el.attributes.title === 'temp');
+$el.attr('title', 'temp');
+console.assert(el.getAttribute('title') === 'temp');
 
-console.assert($el.css('title') === 'temp');
+console.assert($el.attr('title') === 'temp');
