@@ -91,11 +91,24 @@ tests[0].click();
 console.assert(!handlerInvoked);
 console.assert(!anotherHandlerInvoked);
 
+// css
 
 $el.css({padding: '20px', margin: '30px'});
-$el.css('padding', '20px');
-$el.css('padding'); // '20px'
+console.assert(el.style.padding === '20px');
+console.assert(el.style.margin === '30px');
 
+$el.css('padding', '10px');
+console.assert(el.style.padding === '10px');
 
+console.assert($el.css('padding') === '10px');
 
+// attr
 
+$el.attr({title: 'test', align: 'right'});
+console.assert(el.attributes.title === 'test');
+console.assert(el.attributes.align === 'right');
+
+$el.css('title', 'temp');
+console.assert(el.attributes.title === 'temp');
+
+console.assert($el.css('title') === 'temp');
