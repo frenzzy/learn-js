@@ -1,4 +1,4 @@
-/*jslint browser: true, plusplus: true, todo: true*/
+/*jslint browser: true, plusplus: true, nomen: true, todo: true*/
 /*global window*/
 
 (function () {
@@ -18,6 +18,7 @@
             function F() {
                 this.init(selector);
             }
+
             F.prototype = Lib.prototype;
             F.prototype.constructor = Lib;
 
@@ -96,13 +97,36 @@
     };
 
     /**
+     * @type {Object}
+     * @private
+     */
+    Lib.prototype._eventHandlers = {};
+
+    /**
      * @param {String} eventName
      * @param {Function} callback
      * @returns {Lib}
      * @public
      */
     Lib.prototype.on = function (eventName, callback) {
-        // TODO
+
+        var handlers = this._eventHandlers;
+
+        this.forEach(function (node) {
+
+            if (!handlers[node]) {
+                handlers[node] = {};
+            }
+
+            if (!handlers[node][eventName]) {
+                handlers[node][eventName] = [];
+            }
+
+            handlers[node][eventName].push(callback);
+            node.addEventListener(eventName, callback);
+        });
+
+        return this;
     };
 
     /**
@@ -112,7 +136,36 @@
      * @public
      */
     Lib.prototype.off = function (eventName, callback) {
-        // TODO
+
+        var handlers = this._eventHandlers;
+
+        if (!callback) {
+
+            this.forEach(function (node) {
+
+                if (!handlers[node]) {
+                    return;
+                }
+
+                if (!handlers[node][eventName]) {
+                    return;
+                }
+
+                handlers[node][eventName].forEach(function (handler) {
+                    node.removeEventListener(eventName, handler);
+                });
+
+                delete handlers[node][eventName];
+            });
+
+            return this;
+        }
+
+        this.forEach(function (node) {
+            node.removeEventListener(eventName, callback);
+        });
+
+        return this;
     };
 
     /**
@@ -121,7 +174,19 @@
      * @public
      */
     Lib.prototype.click = function (callback) {
-        // TODO
+
+        if (!callback) {
+
+            this.forEach(function (node) {
+                node.click();
+            });
+
+            return this;
+        }
+
+        this.on('click', callback);
+
+        return this;
     };
 
     /**
