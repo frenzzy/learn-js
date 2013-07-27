@@ -9,8 +9,9 @@ var el = document.getElementById('lib'),
 console.assert($el[0] === el);
 
 var $span = $('<span id="id"/>');
+
 console.assert($span.length === 1);
-console.assert($span[0].tagName === 'span');
+console.assert($span[0].tagName === 'SPAN');
 console.assert($span[0].getAttribute('id') === 'id');
 
 console.assert($(document.getElementById('lib'))[0] === el);

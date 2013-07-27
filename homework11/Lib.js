@@ -1,20 +1,75 @@
-/*jslint todo: true*/
+/*jslint browser: true, plusplus: true, todo: true*/
 /*global window*/
 
 (function () {
     "use strict";
 
-    /**
-     * @param {String|HTMLElement} selector
-     * @constructor
-     * @class Lib
-     */
-    var Lib = function (selector) {
-        // TODO
-    };
+    var div = document.createElement('div'),
+        regexTag = /^<[\s\S]+>$/,
+
+        /**
+         * @param {String|HTMLElement} [selector]
+         * @returns {Object}
+         * @constructor
+         * @class Lib
+         */
+        Lib = function (selector) {
+
+            function F() {
+                this.init(selector);
+            }
+            F.prototype = Lib.prototype;
+            F.prototype.constructor = Lib;
+
+            return new F();
+        };
 
     Lib.prototype = Object.create(Array.prototype);
     Lib.prototype.constructor = Lib;
+
+    /**
+     * @param {String|HTMLElement} [selector]
+     * @returns {Lib}
+     */
+    Lib.prototype.init = function (selector) {
+
+        if (!selector) {
+            return this;
+        }
+
+        if (typeof selector === 'string') {
+
+            var elements,
+                length,
+                i;
+
+            if (regexTag.test(selector)) {
+
+                div.innerHTML = selector;
+                elements = div.childNodes;
+                length = elements.length;
+
+                for (i = 0; i < length; i++) {
+                    this.push(elements[i]);
+                }
+
+                return this;
+            }
+
+            elements = document.querySelectorAll(selector);
+            length = elements.length;
+
+            for (i = 0; i < length; i++) {
+                this.push(elements[i]);
+            }
+
+        } else if (selector.nodeType) {
+
+            this.push(selector);
+        }
+
+        return this;
+    };
 
     /**
      * @param {String} selector
@@ -22,7 +77,22 @@
      * @public
      */
     Lib.prototype.find = function (selector) {
-        // TODO
+
+        var result = Lib.call(this),
+            elements,
+            length,
+            i;
+
+        this.forEach(function (node) {
+            elements = node.querySelectorAll(selector);
+            length = elements.length;
+
+            for (i = 0; i < length; i++) {
+                result.push(elements[i]);
+            }
+        });
+
+        return result;
     };
 
     /**
