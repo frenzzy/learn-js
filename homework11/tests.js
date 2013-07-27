@@ -1,24 +1,19 @@
-/*jslint devel: true*/
+/*jslint devel: true, browser: true*/
+/*global $*/
 
 // creation
 
 var el = document.getElementById('lib'),
     $el = $('#lib');
 
-console.assert(
-    $el[0] === el,
-    "$(selector) test failed"
-);
+console.assert($el[0] === el);
 
 var $span = $('<span id="id"/>');
-console.assert($span.length == 1, '');
-console.assert($span[0].tagName == 'span');
-console.assert($span[0].getAttribute('id') == 'id');
+console.assert($span.length === 1);
+console.assert($span[0].tagName === 'span');
+console.assert($span[0].getAttribute('id') === 'id');
 
-console.assert(
-    $(document.getElementById('lib'))[0] === el,
-    "$(element) test failed"
-);
+console.assert($(document.getElementById('lib'))[0] === el);
 
 // create collection
 
@@ -35,16 +30,12 @@ document.body.appendChild(div);
 
 console.assert($collection.length !== collection.length);
 
-
 // find
 
 var test = el.querySelector('.test'),
     $test = $el.find('.test');
 
-console.assert(
-    $test[0] === test,
-    "$(selector) test failed"
-);
+console.assert($test[0] === test);
 
 // find in collection
 
@@ -56,6 +47,7 @@ console.compareArrays($testsInCollection, tests);
 
 var handlerInvoked = false;
 $testsInCollection.on('click', function () {
+    "use strict";
     handlerInvoked = true;
 });
 
@@ -69,7 +61,8 @@ console.assert(handlerInvoked);
 // off
 
 var anotherHandlerInvoked = false;
-var handler = function(){
+var handler = function () {
+    "use strict";
     anotherHandlerInvoked = true;
 };
 
@@ -112,3 +105,85 @@ $el.attr('title', 'temp');
 console.assert(el.getAttribute('title') === 'temp');
 
 console.assert($el.attr('title') === 'temp');
+
+// addClass
+
+$el.addClass('element');
+console.assert($el[0].className.indexOf('element') > -1);
+
+$collection.addClass('collection');
+console.collectionHasClass($collection, 'collection', true);
+
+// hasClass true
+
+console.assert($el.hasClass('element') === true);
+console.assert($collection.hasClass('collection') === true);
+
+// removeClass
+
+$el.removeClass('element');
+console.assert($el[0].className.indexOf('element') === -1);
+
+$collection.removeClass('collection');
+console.collectionHasClass($collection, 'collection', false);
+
+// hasClass false
+
+console.assert($el.hasClass('element') === false);
+console.assert($collection.hasClass('collection') === false);
+
+// toggleClass
+
+$el.toggleClass('element');
+console.assert($el[0].className.indexOf('element') > -1);
+
+$collection.toggleClass('collection');
+console.collectionHasClass($collection, 'collection', true);
+
+$el.toggleClass('element');
+console.assert($el[0].className.indexOf('element') === -1);
+
+$collection.toggleClass('collection');
+console.collectionHasClass($collection, 'collection', false);
+
+// appendTo
+
+$(div).appendTo(el);
+console.assert(div.parentNode === el);
+console.assert(div.previousSibling.className === 'test');
+console.assert(el.lastChild === div);
+
+// prependTo
+
+$(div).prependTo(el);
+console.assert(div.parentNode === el);
+console.assert(div.nextSibling.className === 'test');
+console.assert(el.firstChild === div);
+
+// append
+
+$(el).append($span);
+console.assert($span[0].parentNode === el);
+console.assert($span[0].previousSibling.className === 'test');
+console.assert(el.lastChild === $span[0]);
+
+// prepend
+
+$(el).prepend($span);
+console.assert($span[0].parentNode === el);
+console.assert($span[0].nextSibling.className === 'lib');
+console.assert(el.firstChild === $span[0]);
+
+// insertAfter
+
+$span.insertAfter(div);
+console.assert($span[0].parentNode === el);
+console.assert($span[0].previousSibling.className === 'lib');
+console.assert($span[0].nextSibling.className === 'test');
+
+// insertBefore
+
+$span.insertBefore(div);
+console.assert($span[0].parentNode === el);
+console.assert(el.firstChild === $span[0]);
+console.assert($span[0].nextSibling.className === 'lib');
