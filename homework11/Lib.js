@@ -184,19 +184,63 @@
     };
 
     /**
-     * @returns {Lib}
+     * @param {String|Object} name
+     * @param {String} [value]
+     * @returns {Lib|String}
      * @public
      */
-    Lib.prototype.css = function () {
-        // TODO
+    Lib.prototype.css = function (name, value) {
+
+        if (typeof name === 'object') {
+            this.forEach(function (node) {
+                var prop;
+                for (prop in name) {
+                    if (name.hasOwnProperty(prop)) {
+                        node.style[prop] = name[prop];
+                    }
+                }
+            });
+        }
+
+        if (!value) {
+            return this[0].style[name];
+        }
+
+        this.forEach(function (node) {
+            node.style[name] = value;
+        });
+
+        return this;
     };
 
     /**
-     * @returns {Lib}
+     * @param {String|Object} name
+     * @param {String} [value]
+     * @returns {Lib|String}
      * @public
      */
-    Lib.prototype.attr = function () {
-        // TODO
+    Lib.prototype.attr = function (name, value) {
+
+        if (typeof name === 'object') {
+            this.forEach(function (node) {
+                var prop;
+                for (prop in name) {
+                    if (name.hasOwnProperty(prop)) {
+                        node.setAttribute(prop, name[prop]);
+                    }
+                }
+            });
+        }
+
+        if (!value) {
+            return this[0].getAttribute(name);
+        }
+
+        this.forEach(function (node) {
+            node.setAttribute(name, value);
+        });
+
+        return this;
     };
 
     /**
@@ -205,7 +249,14 @@
      * @public
      */
     Lib.prototype.addClass = function (className) {
-        // TODO
+
+        this.forEach(function (node) {
+            if (node.className.indexOf(className) === -1) {
+                node.className += (node.className ? ' ' : '') + className;
+            }
+        });
+
+        return this;
     };
 
     /**
@@ -214,7 +265,16 @@
      * @public
      */
     Lib.prototype.hasClass = function (className) {
-        // TODO
+
+        var result = false;
+
+        this.forEach(function (node) {
+            if (node.className.indexOf(className) !== -1) {
+                result = true;
+            }
+        });
+
+        return result;
     };
 
     /**
@@ -223,7 +283,12 @@
      * @public
      */
     Lib.prototype.removeClass = function (className) {
-        // TODO
+
+        this.forEach(function (node) {
+            node.className = node.className.replace(new RegExp('(?:^|\\s)' + className + '(?!\\S)'), '');
+        });
+
+        return this;
     };
 
     /**
@@ -232,7 +297,16 @@
      * @public
      */
     Lib.prototype.toggleClass = function (className) {
-        // TODO
+
+        this.forEach(function (node) {
+            if (node.className.indexOf(className) === -1) {
+                node.className += (node.className ? ' ' : '') + className;
+            } else {
+                node.className = node.className.replace(new RegExp('(?:^|\\s)' + className + '(?!\\S)'), '');
+            }
+        });
+
+        return this;
     };
 
     /**
@@ -241,7 +315,12 @@
      * @public
      */
     Lib.prototype.appendTo = function (element) {
-        // TODO
+
+        this.forEach(function (node) {
+            element.appendChild(node);
+        });
+
+        return this;
     };
 
     /**
@@ -250,7 +329,14 @@
      * @public
      */
     Lib.prototype.prependTo = function (element) {
-        // TODO
+
+        var firstChild = element.firstChild;
+
+        this.forEach(function (node) {
+            element.insertBefore(node, firstChild);
+        });
+
+        return this;
     };
 
     /**
@@ -259,7 +345,10 @@
      * @public
      */
     Lib.prototype.append = function (element) {
+
         // TODO
+
+        return this;
     };
 
     /**
@@ -268,7 +357,10 @@
      * @public
      */
     Lib.prototype.prepend = function (element) {
+
         // TODO
+
+        return this;
     };
 
     /**
@@ -277,7 +369,10 @@
      * @public
      */
     Lib.prototype.insertAfter = function (element) {
+
         // TODO
+
+        return this;
     };
 
     /**
@@ -286,7 +381,10 @@
      * @public
      */
     Lib.prototype.insertBefore = function (element) {
+
         // TODO
+
+        return this;
     };
 
     window.$ = Lib;
