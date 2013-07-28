@@ -1,4 +1,4 @@
-/*jslint devel: true, browser: true*/
+/*jslint devel: true, browser: true, plusplus: true*/
 /*global $*/
 
 // creation
@@ -74,6 +74,16 @@ handlerInvoked = false;
 tests[0].click();
 console.assert(handlerInvoked);
 console.assert(!anotherHandlerInvoked);
+
+// click
+
+var clickCounter = 0;
+$testsInCollection.click(function () {
+    "use strict";
+    clickCounter++;
+});
+$testsInCollection.click();
+console.assert(clickCounter === 2);
 
 // off without second argument
 

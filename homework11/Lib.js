@@ -5,7 +5,6 @@
     "use strict";
 
     var div = document.createElement('div'),
-        regexTag = /^<[\s\S]+>$/,
 
         /**
          * @param {String|HTMLElement} [selector]
@@ -44,23 +43,14 @@
                 length,
                 i;
 
-            if (regexTag.test(selector)) {
-
+            if (selector.charAt(0) === '<') {
                 div.innerHTML = selector;
                 elements = div.childNodes;
-                length = elements.length;
-
-                for (i = 0; i < length; i++) {
-                    this.push(elements[i]);
-                }
-
-                return this;
+            } else {
+                elements = document.querySelectorAll(selector);
             }
 
-            elements = document.querySelectorAll(selector);
-            length = elements.length;
-
-            for (i = 0; i < length; i++) {
+            for (i = 0, length = elements.length; i < length; i++) {
                 this.push(elements[i]);
             }
 
@@ -100,7 +90,7 @@
      * @type {Object}
      * @private
      */
-    Lib.prototype._eventHandlers = {};
+    Lib.prototype._events = {};
 
     /**
      * @param {String} eventName
@@ -110,19 +100,22 @@
      */
     Lib.prototype.on = function (eventName, callback) {
 
-        var handlers = this._eventHandlers;
+        var events = this._events,
+            eventHandlers;
+
+        if (!events[eventName]) {
+            events[eventName] = {};
+        }
+
+        eventHandlers = events[eventName];
 
         this.forEach(function (node) {
 
-            if (!handlers[node]) {
-                handlers[node] = {};
+            if (!eventHandlers[node]) {
+                eventHandlers[node] = [];
             }
 
-            if (!handlers[node][eventName]) {
-                handlers[node][eventName] = [];
-            }
-
-            handlers[node][eventName].push(callback);
+            eventHandlers[node].push(callback);
             node.addEventListener(eventName, callback);
         });
 
@@ -137,25 +130,28 @@
      */
     Lib.prototype.off = function (eventName, callback) {
 
-        var handlers = this._eventHandlers;
+        var events = this._events,
+            eventHandlers;
+
+        if (!events[eventName]) {
+            return this;
+        }
+
+        eventHandlers = events[eventName];
 
         if (!callback) {
 
             this.forEach(function (node) {
 
-                if (!handlers[node]) {
+                if (!eventHandlers[node]) {
                     return;
                 }
 
-                if (!handlers[node][eventName]) {
-                    return;
-                }
-
-                handlers[node][eventName].forEach(function (handler) {
+                eventHandlers[node].forEach(function (handler) {
                     node.removeEventListener(eventName, handler);
                 });
 
-                delete handlers[node][eventName];
+                delete eventHandlers[node];
             });
 
             return this;
@@ -184,9 +180,7 @@
             return this;
         }
 
-        this.on('click', callback);
-
-        return this;
+        return this.on('click', callback);
     };
 
     /**
