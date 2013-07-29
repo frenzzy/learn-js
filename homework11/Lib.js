@@ -346,7 +346,9 @@
      */
     Lib.prototype.append = function (element) {
 
-        // TODO
+        this.forEach(function (node) {
+            node.appendChild(element[0]);
+        });
 
         return this;
     };
@@ -358,7 +360,9 @@
      */
     Lib.prototype.prepend = function (element) {
 
-        // TODO
+        this.forEach(function (node) {
+            node.insertBefore(element[0], node.firstChild);
+        });
 
         return this;
     };
@@ -370,7 +374,12 @@
      */
     Lib.prototype.insertAfter = function (element) {
 
-        // TODO
+        var parent = element.parentNode,
+            child = element.nextSibling;
+
+        this.forEach(function (node) {
+            parent.insertBefore(node, child);
+        });
 
         return this;
     };
@@ -382,7 +391,11 @@
      */
     Lib.prototype.insertBefore = function (element) {
 
-        // TODO
+        var parent = element.parentNode;
+
+        this.forEach(function (node) {
+            parent.insertBefore(node, element);
+        });
 
         return this;
     };
