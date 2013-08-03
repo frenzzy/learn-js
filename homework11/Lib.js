@@ -1,28 +1,18 @@
-/*jslint browser: true, plusplus: true, nomen: true, todo: true*/
+/*jslint browser: true, plusplus: true, nomen: true*/
 /*global window*/
 
 (function () {
     "use strict";
 
-    var div = document.createElement('div'),
-
-        /**
-         * @param {String|HTMLElement} [selector]
-         * @returns {Object}
-         * @constructor
-         * @class Lib
-         */
-        Lib = function (selector) {
-
-            function F() {
-                this.init(selector);
-            }
-
-            F.prototype = Lib.prototype;
-            F.prototype.constructor = Lib;
-
-            return new F();
-        };
+    /**
+     * @param {String|HTMLElement} [selector]
+     * @returns {Object}
+     * @constructor
+     * @class Lib
+     */
+    var Lib = function (selector) {
+        return new Lib.prototype._init(selector);
+    };
 
     Lib.prototype = Object.create(Array.prototype);
     Lib.prototype.constructor = Lib;
@@ -30,8 +20,9 @@
     /**
      * @param {String|HTMLElement} [selector]
      * @returns {Lib}
+     * @protected
      */
-    Lib.prototype.init = function (selector) {
+    Lib.prototype._init = function (selector) {
 
         if (!selector) {
             return this;
@@ -40,19 +31,17 @@
         if (typeof selector === 'string') {
 
             var elements,
-                length,
-                i;
+                div;
 
             if (selector.charAt(0) === '<') {
+                div = document.createElement('div');
                 div.innerHTML = selector;
                 elements = div.childNodes;
             } else {
                 elements = document.querySelectorAll(selector);
             }
 
-            for (i = 0, length = elements.length; i < length; i++) {
-                this.push(elements[i]);
-            }
+            this._addElements(elements);
 
         } else if (selector.nodeType) {
 
@@ -62,6 +51,27 @@
         return this;
     };
 
+    Lib.prototype._init.prototype = Lib.prototype;
+
+    /**
+     * @type {Object}
+     * @private
+     */
+    Lib.prototype._events = {};
+
+    /**
+     * @param {NodeList} elements
+     * @private
+     */
+    Lib.prototype._addElements = function (elements) {
+
+        var i, len;
+
+        for (i = 0, len = elements.length; i < len; i++) {
+            this.push(elements[i]);
+        }
+    };
+
     /**
      * @param {String} selector
      * @returns {Lib}
@@ -69,28 +79,16 @@
      */
     Lib.prototype.find = function (selector) {
 
-        var result = Lib.call(this),
-            elements,
-            length,
+        var lib = new Lib.prototype._init(),
+            len,
             i;
 
-        this.forEach(function (node) {
-            elements = node.querySelectorAll(selector);
-            length = elements.length;
+        for (i = 0, len = this.length; i < len; i++) {
+            lib._addElements(this[i].querySelectorAll(selector));
+        }
 
-            for (i = 0; i < length; i++) {
-                result.push(elements[i]);
-            }
-        });
-
-        return result;
+        return lib;
     };
-
-    /**
-     * @type {Object}
-     * @private
-     */
-    Lib.prototype._events = {};
 
     /**
      * @param {String} eventName
@@ -191,24 +189,25 @@
      */
     Lib.prototype.css = function (name, value) {
 
+        var i, len, prop;
+
         if (typeof name === 'object') {
-            this.forEach(function (node) {
-                var prop;
+            for (i = 0, len = this.length; i < len; i++) {
                 for (prop in name) {
                     if (name.hasOwnProperty(prop)) {
-                        node.style[prop] = name[prop];
+                        this[i].style[prop] = name[prop];
                     }
                 }
-            });
+            }
         }
 
         if (!value) {
             return this[0].style[name];
         }
 
-        this.forEach(function (node) {
-            node.style[name] = value;
-        });
+        for (i = 0, len = this.length; i < len; i++) {
+            this[i].style[name] = value;
+        }
 
         return this;
     };
@@ -221,24 +220,25 @@
      */
     Lib.prototype.attr = function (name, value) {
 
+        var i, len, prop;
+
         if (typeof name === 'object') {
-            this.forEach(function (node) {
-                var prop;
+            for (i = 0, len = this.length; i < len; i++) {
                 for (prop in name) {
                     if (name.hasOwnProperty(prop)) {
-                        node.setAttribute(prop, name[prop]);
+                        this[i].setAttribute(prop, name[prop]);
                     }
                 }
-            });
+            }
         }
 
         if (!value) {
             return this[0].getAttribute(name);
         }
 
-        this.forEach(function (node) {
-            node.setAttribute(name, value);
-        });
+        for (i = 0, len = this.length; i < len; i++) {
+            this[i].setAttribute(name, value);
+        }
 
         return this;
     };
@@ -250,11 +250,11 @@
      */
     Lib.prototype.addClass = function (className) {
 
-        this.forEach(function (node) {
-            if (node.className.indexOf(className) === -1) {
-                node.className += (node.className ? ' ' : '') + className;
-            }
-        });
+        var i, len;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            this[i].classList.add(className);
+        }
 
         return this;
     };
@@ -266,15 +266,15 @@
      */
     Lib.prototype.hasClass = function (className) {
 
-        var result = false;
+        var i, len;
 
-        this.forEach(function (node) {
-            if (node.className.indexOf(className) !== -1) {
-                result = true;
+        for (i = 0, len = this.length; i < len; i++) {
+            if (this[i].classList.contains(className)) {
+                return true;
             }
-        });
+        }
 
-        return result;
+        return false;
     };
 
     /**
@@ -284,9 +284,11 @@
      */
     Lib.prototype.removeClass = function (className) {
 
-        this.forEach(function (node) {
-            node.className = node.className.replace(new RegExp('(?:^|\\s)' + className + '(?!\\S)'), '');
-        });
+        var i, len;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            this[i].classList.remove(className);
+        }
 
         return this;
     };
@@ -298,104 +300,162 @@
      */
     Lib.prototype.toggleClass = function (className) {
 
-        this.forEach(function (node) {
-            if (node.className.indexOf(className) === -1) {
-                node.className += (node.className ? ' ' : '') + className;
-            } else {
-                node.className = node.className.replace(new RegExp('(?:^|\\s)' + className + '(?!\\S)'), '');
-            }
-        });
+        var i, len;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            this[i].classList.toggle(className);
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.appendTo = function (element) {
 
-        this.forEach(function (node) {
-            element.appendChild(node);
-        });
+        var node = element,
+            len,
+            i;
+
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        for (i = 0, len = this.length; i < len; i++) {
+            node.appendChild(this[i]);
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.prependTo = function (element) {
 
-        var firstChild = element.firstChild;
+        var node = element,
+            childNode,
+            len,
+            i;
 
-        this.forEach(function (node) {
-            element.insertBefore(node, firstChild);
-        });
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        childNode = node.firstChild;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            node.insertBefore(this[i], childNode);
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.append = function (element) {
 
-        this.forEach(function (node) {
-            node.appendChild(element[0]);
-        });
+        var node = element,
+            len = this.length,
+            i;
+
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        if (len) {
+            this[0].appendChild(node);
+
+            for (i = 1; i < len; i++) {
+                this[i].appendChild(node.cloneNode(true));
+            }
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.prepend = function (element) {
 
-        this.forEach(function (node) {
-            node.insertBefore(element[0], node.firstChild);
-        });
+        var node = element,
+            len = this.length,
+            i;
+
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        if (len) {
+            this[0].insertBefore(node, this[0].firstChild);
+
+            for (i = 1; i < len; i++) {
+                this[i].insertBefore(node.cloneNode(true), this[i].firstChild);
+            }
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.insertAfter = function (element) {
 
-        var parent = element.parentNode,
-            child = element.nextSibling;
+        var node = element,
+            parentNode,
+            childNode,
+            len,
+            i;
 
-        this.forEach(function (node) {
-            parent.insertBefore(node, child);
-        });
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        parentNode = node.parentNode;
+        childNode = node.nextSibling;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            parentNode.insertBefore(this[i], childNode);
+        }
 
         return this;
     };
 
     /**
-     * @param {HTMLElement} element
+     * @param {Lib|HTMLElement} element
      * @returns {Lib}
      * @public
      */
     Lib.prototype.insertBefore = function (element) {
 
-        var parent = element.parentNode;
+        var node = element,
+            parentNode,
+            len,
+            i;
 
-        this.forEach(function (node) {
-            parent.insertBefore(node, element);
-        });
+        if (element instanceof Lib) {
+            node = element[0];
+        }
+
+        parentNode = node.parentNode;
+
+        for (i = 0, len = this.length; i < len; i++) {
+            parentNode.insertBefore(this[i], node);
+        }
 
         return this;
     };
