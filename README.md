@@ -1,4 +1,4 @@
-## Домашняя работа по JavaScript
+## Домашняя и классная работа по JavaScript
 
 1. Функция multiplyArrays
 2. Функция cascadeCall
@@ -11,3 +11,4 @@
 9. Drag and drop
 10. Extend Class
 11. jQuery-подобная библиотека
+12. Знакомство с Require.js
