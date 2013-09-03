@@ -1,6 +1,6 @@
 if (typeof define != 'function') {
     var define = function(callback){
-        ofio = callback();
+        Ofio = callback();
     }
 }
 
