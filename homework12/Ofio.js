@@ -21,22 +21,24 @@ define(function () {
         "use strict";
 
         var prop,
-            F = function () {
+            newClass = function () {
                 this._init();
             };
 
-        F.prototype = Object.create(this.prototype);
-        F.prototype.constructor = F;
+        function F() {}
+        F.prototype = this.prototype;
+        newClass.prototype = new F();
+        newClass.prototype.constructor = newClass;
 
         for (prop in prototype) {
             if (prototype.hasOwnProperty(prop)) {
-                F.prototype[prop] = prototype[prop];
+                newClass.prototype[prop] = prototype[prop];
             }
         }
 
-        F.extend = this.extend;
+        newClass.extend = this.extend;
 
-        return F;
+        return newClass;
     };
 
     return Ofio;
